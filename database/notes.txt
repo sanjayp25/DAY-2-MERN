@@ -1,0 +1,65 @@
+MongoDB:
+------------
+
+1)Insert  Data:
+ 1.insertOne()
+   Syntax: db.collectionName.insertOne({
+     name:"suriya",
+   })
+ 2.insertMany()
+   Syntax: db.collectionName.insertMany(
+    [
+    {name:"arul",gmail:"arul@gmail.com"},
+    {name:"suriya",gmail:"suriya@gmail.com"},
+    {name:"apazhani",gamil:"pazhani@gmail.com"}
+   ]
+   )
+2) find data/read data from collectionName
+   --------------------------------------
+   1.find()
+
+   Syntax: db.collectionName.find()
+
+    i)filter:
+     Syntax: db.collectionName.find({filter condition})
+
+     db.cse.findOne({
+      name:"suriya"
+      })
+
+     ii)Projections:
+
+        Syntax:
+        db.collectionName.find({filter condition},{projection condition} )
+        
+        db.cse.find({},{_id:0,name:1})
+        
+        display fields -> value 1 or true
+ 
+
+3)delete:
+
+ 1)deleteOne():
+   Syntax:
+       db.collectionName.deleteOne({filter condition})
+
+ 2)deleteMany():
+   dn.collectionName,deleteMant({filter condition})
+
+4. update....
+
+  update operators:
+    1.$set
+    2.$unset
+    3.$pop
+    4.$push
+    5.$inc
+
+    Syntax:
+     db.collectionName.updateOne({filter condition},{updated query})
+     db.collectionName.updateOne({filter condition},{$set:{updated query}}) add new data or update
+     db.collectionName.updateOne({filter condition},{$unset:{updated query}}) delete field
+     db.collectionName.updateOne({filter condition},{$inc:{updated query}}) increment numbers with existing numbers
+     db.collectionName.updateOne({filter condition},{$inc:{updated query}}) include (-)symbol with numbers add with existing numbers
+     db.collectionName.updateOne({filter condition},{$push:{updated query}}) add value in existinf field array
+     
