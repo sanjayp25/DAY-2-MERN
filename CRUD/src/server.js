@@ -5,6 +5,39 @@ const path=require("path")
 const bcrypt=require("bcryptjs")
 const cookieParser=require("cookie-parser")
 const jwt=require("jsonwebtoken")
+const multer=require("multer")
+const fs=require("fs")
+
+// Create uploads directory if it doesn't exist
+const uploadsDir = path.join(__dirname,"..","public","uploads")
+if(!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir, {recursive:true})
+}
+
+// Multer configuration
+const storage = multer.diskStorage({
+    destination: (req,file,cb) => {
+        cb(null, uploadsDir)
+    },
+    filename: (req,file,cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, 'avatar-' + uniqueSuffix + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage,
+    limits: {fileSize: 5*1024*1024},
+    fileFilter: (req,file,cb) => {
+        const allowedMimes = ['image/jpeg','image/png','image/gif','image/webp']
+        if(allowedMimes.includes(file.mimetype)){
+            cb(null, true)
+        } else {
+            cb(new Error('Only image files are allowed'))
+        }
+    }
+})
+
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser())
@@ -212,10 +245,10 @@ app.get("/profile/:id",async(req,res)=>{
 })
 
 // Update profile
-app.post("/profile/:id",async(req,res)=>{
+app.post("/profile/:id",upload.single("avatar"),async(req,res)=>{
     try{
         const{name,bio,title,location,skills,website,github,linkedin}=req.body
-        await User.findByIdAndUpdate(req.params.id,{
+        const updateData = {
             name:name,
             bio:bio,
             title:title,
@@ -224,7 +257,14 @@ app.post("/profile/:id",async(req,res)=>{
             website:website,
             github:github,
             linkedin:linkedin
-        })
+        }
+        
+        // If file was uploaded, update avatar path
+        if(req.file){
+            updateData.avatar = '/uploads/' + req.file.filename
+        }
+        
+        await User.findByIdAndUpdate(req.params.id, updateData)
         const user=await User.findById(req.params.id)
         res.render("profile",{user:user,message:"Profile updated successfully!"})
     }
