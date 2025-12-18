@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - John Doe</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">JD</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li><a href="/add-project" class="nav-link">Add Project</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="content-section">
+        <div class="container">
+            <h1>About Me</h1>
+            <div class="about-content">
+                <p>I'm a passionate full-stack developer with 5+ years of experience in building web applications. I specialize in the MERN stack and have a strong foundation in modern JavaScript, React, Node.js, and MongoDB.</p>
+                <p>When I'm not coding, you can find me contributing to open-source projects, writing technical blogs, or exploring new technologies. I'm always eager to learn and grow as a developer.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Projects</p>
+                    </div>
+                    <div class="stat">
+                        <h3>30+</h3>
+                        <p>Clients</p>
+                    </div>
+                    <div class="stat">
+                        <h3>5+</h3>
+                        <p>Years</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 John Doe. All rights reserved.</p>
+    </footer>
+
+    <style>
+        .content-section {
+            min-height: calc(100vh - 200px);
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 800px;
+        }
+
+        .content-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-content p {
+            font-size: 1.1rem;
+            color: #b0b9c1;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .stat h3 {
+            font-size: 2rem;
+            color: #0066ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat p {
+            color: #b0b9c1;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</body>
+</html>

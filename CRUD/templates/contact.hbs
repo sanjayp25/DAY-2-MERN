@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - John Doe</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">JD</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li><a href="/add-project" class="nav-link">Add Project</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="content-section">
+        <div class="container">
+            <h1>Get In Touch</h1>
+            {{#if success}}<div class="success-message">{{success}}</div>{{/if}}
+            {{#if error}}<div class="error-message">{{error}}</div>{{/if}}
+            <form method="POST" action="/contact" class="form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label>Your Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+            <div class="contact-info">
+                <h2>Contact Information</h2>
+                <p><strong>Email:</strong> john@example.com</p>
+                <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                <p><strong>Location:</strong> San Francisco, CA</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 John Doe. All rights reserved.</p>
+    </footer>
+
+    <style>
+        .content-section {
+            min-height: calc(100vh - 200px);
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .content-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            background: #232a3e;
+            border: 1px solid #2d3748;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        .contact-info {
+            background: #232a3e;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #2d3748;
+        }
+
+        .contact-info h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: #b0b9c1;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            background: #ef4444;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</body>
+</html>

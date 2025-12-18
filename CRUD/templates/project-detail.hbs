@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{project.title}} - John Doe</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">JD</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li><a href="/add-project" class="nav-link">Add Project</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="content-section">
+        <div class="container">
+            <a href="/projects" class="back-link">← Back to Projects</a>
+            <h1>{{project.title}}</h1>
+            <div class="project-detail">
+                <p>{{project.description}}</p>
+                <div class="technologies">
+                    <strong>Technologies:</strong>
+                    <div class="tech-tags">
+                        {{#each (split project.technologies ',')}}
+                        <span class="tag">{{trim this}}</span>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="project-links">
+                    {{#if project.link}}<a href="{{project.link}}" target="_blank" class="link-btn">View Project</a>{{/if}}
+                    {{#if project.github}}<a href="{{project.github}}" target="_blank" class="link-btn">GitHub Repository</a>{{/if}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 John Doe. All rights reserved.</p>
+    </footer>
+
+    <style>
+        .content-section {
+            min-height: calc(100vh - 200px);
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            color: #0066ff;
+            text-decoration: none;
+            margin-bottom: 1rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #00d4ff;
+        }
+
+        .content-section h1 {
+            font-size: 2.5rem;
+            margin: 1rem 0 2rem;
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .project-detail {
+            background: #232a3e;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #2d3748;
+        }
+
+        .project-detail p {
+            color: #b0b9c1;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .technologies {
+            margin-bottom: 2rem;
+        }
+
+        .technologies strong {
+            color: #00d4ff;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(0, 102, 255, 0.2);
+            color: #0066ff;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .link-btn {
+            background: #0066ff;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .link-btn:hover {
+            background: #00d4ff;
+            transform: translateY(-3px);
+        }
+    </style>
+
+    <script>
+        Handlebars = Handlebars || {};
+        Handlebars.registerHelper('split', function(str, delim) {
+            return str ? str.split(delim) : [];
+        });
+        Handlebars.registerHelper('trim', function(str) {
+            return str ? str.trim() : '';
+        });
+    </script>
+</body>
+</html>
