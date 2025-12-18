@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Portfolio</title>
+</head>
+<body>
+    <div class="signup-container">
+        <div class="signup-box">
+            <h1>Sign Up</h1>
+            {{#if message}}<div class="alert">{{message}}</div>{{/if}}
+            <form method="POST" action="/signup">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="passwordConfirm">Confirm Password</label>
+                    <input type="password" id="passwordConfirm" name="passwordConfirm" required>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <p class="login-link">Already have an account? <a href="/login">Login here</a></p>
+            <p class="home-link"><a href="/">Back to Home</a></p>
+        </div>
+    </div>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signup-container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .signup-box {
+            background: #232a3e;
+            border-radius: 12px;
+            border: 1px solid #2d3748;
+            padding: 40px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .signup-box h1 {
+            color: #00d4ff;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            background: #1a2332;
+            border: 1px solid #2d3748;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        .alert {
+            background: #10b981;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #b0b9c1;
+        }
+
+        .login-link a {
+            color: #0066ff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            color: #00d4ff;
+        }
+
+        .home-link {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+
+        .home-link a {
+            color: #0066ff;
+            text-decoration: none;
+        }
+
+        .home-link a:hover {
+            color: #00d4ff;
+        }
+    </style>
+</body>
+</html>

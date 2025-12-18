@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - {{user.username}}</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">JD</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="profile-section">
+        <div class="container">
+            <div class="profile-header">
+                <img src="{{user.avatar}}" alt="{{user.username}}" class="avatar">
+                <div class="profile-info">
+                    <h1>{{user.username}}</h1>
+                    <p class="email">{{user.email}}</p>
+                    <p class="bio">{{user.bio}}</p>
+                    <p class="joined">Member since {{user.createdAt}}</p>
+                </div>
+            </div>
+
+            {{#if message}}<div class="success-message">{{message}}</div>{{/if}}
+
+            <div class="profile-edit">
+                <h2>Edit Profile</h2>
+                <form method="POST" action="/profile/{{user._id}}" class="form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" name="name" value="{{user.name}}" placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label>Bio</label>
+                        <textarea name="bio" rows="4" placeholder="Tell us about yourself">{{user.bio}}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Portfolio. All rights reserved.</p>
+    </footer>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #b0b9c1;
+        }
+
+        .navbar {
+            background: rgba(23, 32, 46, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #2d3748;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: #b0b9c1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+        }
+
+        .profile-section {
+            min-height: 80vh;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .profile-header {
+            background: #232a3e;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #2d3748;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #0066ff;
+            object-fit: cover;
+        }
+
+        .profile-info h1 {
+            color: #00d4ff;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .email {
+            color: #0066ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .bio {
+            margin: 1rem 0;
+            line-height: 1.6;
+        }
+
+        .joined {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .profile-edit {
+            background: #232a3e;
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid #2d3748;
+        }
+
+        .profile-edit h2 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 12px;
+            background: #1a2332;
+            border: 1px solid #2d3748;
+            border-radius: 5px;
+            color: #ffffff;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #0066ff;
+            box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 5px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #0066ff, #ff0066);
+            color: white;
+            align-self: flex-start;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+        }
+
+        .success-message {
+            background: #10b981;
+            color: white;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .footer {
+            background: #0f1419;
+            border-top: 1px solid #2d3748;
+            padding: 2rem;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</body>
+</html>

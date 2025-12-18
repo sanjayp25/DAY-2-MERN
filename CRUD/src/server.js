@@ -1,7 +1,8 @@
 const express=require("express")
-const Portfolio=require("./mongo")
+const {Portfolio,User}=require("./mongo")
 const app=express()
 const path=require("path")
+const bcrypt=require("bcryptjs")
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
 const templatePath=path.join(__dirname,"..","templates")
@@ -100,6 +101,96 @@ app.post("/contact",async(req,res)=>{
     catch(err){
         console.log("Error:",err)
         res.render("contact",{error:"Error sending message"})
+    }
+})
+
+// Signup page
+app.get("/signup",(req,res)=>{
+    res.render("signup")
+})
+
+// Signup
+app.post("/signup",async(req,res)=>{
+    try{
+        const{username,email,password,passwordConfirm}=req.body
+        if(!username||!email||!password||!passwordConfirm){
+            return res.render("signup",{message:"Please provide all values"})
+        }
+        if(password!==passwordConfirm){
+            return res.render("signup",{message:"Passwords do not match"})
+        }
+        const user=await User.findOne({email:email})
+        if(user){
+            return res.render("signup",{message:"Email already in use"})
+        }
+        const hashedPassword=await bcrypt.hash(password,8)
+        const newUser=await User.create({
+            username:username,
+            email:email,
+            password:hashedPassword
+        })
+        res.render("signup",{message:"User registered successfully! Please login."})
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.render("signup",{message:"Error registering user"})
+    }
+})
+
+// Login page
+app.get("/login",(req,res)=>{
+    res.render("login")
+})
+
+// Login
+app.post("/login",async(req,res)=>{
+    try{
+        const{email,password}=req.body
+        if(!email||!password){
+            return res.render("login",{message:"Please provide email and password"})
+        }
+        const user=await User.findOne({email:email})
+        if(!user){
+            return res.render("login",{message:"Email not found"})
+        }
+        const isPasswordMatch=await bcrypt.compare(password,user.password)
+        if(!isPasswordMatch){
+            return res.render("login",{message:"Incorrect password"})
+        }
+        res.render("profile",{user:user})
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.render("login",{message:"Error logging in"})
+    }
+})
+
+// Profile page
+app.get("/profile/:id",async(req,res)=>{
+    try{
+        const user=await User.findById(req.params.id)
+        if(!user){
+            return res.status(404).send("User not found")
+        }
+        res.render("profile",{user:user})
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.send("Error fetching profile")
+    }
+})
+
+// Update profile
+app.post("/profile/:id",async(req,res)=>{
+    try{
+        const{name,bio}=req.body
+        await User.findByIdAndUpdate(req.params.id,{name:name,bio:bio})
+        const user=await User.findById(req.params.id)
+        res.render("profile",{user:user,message:"Profile updated successfully!"})
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.render("profile",{message:"Error updating profile"})
     }
 })
 
