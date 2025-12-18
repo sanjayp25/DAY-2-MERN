@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{portfolioUser.name}} - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a2332 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 20, 25, 0.9);
+            border-bottom: 2px solid #00d4ff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00d4ff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #00d4ff;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Profile Header */
+        .profile-hero {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 102, 255, 0.1) 100%);
+            border: 2px solid #00d4ff;
+            border-radius: 15px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            border: 4px solid #00d4ff;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+        }
+
+        .profile-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #00d4ff;
+        }
+
+        .profile-title {
+            color: #0066ff;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-bio {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .profile-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #888;
+        }
+
+        .meta-item i {
+            color: #00d4ff;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-btn {
+            background: #0066ff;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-btn:hover {
+            background: #0052cc;
+            transform: translateY(-3px);
+        }
+
+        .social-btn.inactive {
+            background: #333;
+            cursor: not-allowed;
+        }
+
+        .skills-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #00d4ff;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill-tag {
+            background: rgba(0, 102, 255, 0.2);
+            color: #0066ff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid #0066ff;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin-top: 3rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #00d4ff;
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #0066ff;
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            color: #00d4ff;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-desc {
+            color: #ccc;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .project-tech {
+            background: rgba(0, 102, 255, 0.15);
+            color: #0066ff;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+            border: 1px solid #0066ff;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 0.5rem;
+            background: #0066ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .project-link:hover {
+            background: #0052cc;
+        }
+
+        .project-link.disabled {
+            background: #333;
+            cursor: not-allowed;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed #00d4ff;
+            border-radius: 10px;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 20, 25, 0.9);
+            border-top: 2px solid #00d4ff;
+            padding: 2rem;
+            text-align: center;
+            color: #888;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .profile-hero {
+                padding: 2rem;
+            }
+
+            .profile-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .profile-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo"><i class="fas fa-laptop-code"></i> Portfolio</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/projects" class="nav-link">All Projects</a></li>
+                {{#if user}}
+                <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="/logout" class="nav-link" style="color: #ff4444;">Logout</a></li>
+                {{else}}
+                <li><a href="/login" class="nav-link">Login</a></li>
+                <li><a href="/signup" class="nav-link">Sign Up</a></li>
+                {{/if}}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Profile Hero -->
+        <div class="profile-hero">
+            <img src="{{portfolioUser.avatar}}" alt="{{portfolioUser.name}}" class="profile-avatar">
+            <h1>{{portfolioUser.name}}</h1>
+            <p class="profile-title">{{portfolioUser.title}}</p>
+            {{#if portfolioUser.bio}}
+            <p class="profile-bio">{{portfolioUser.bio}}</p>
+            {{/if}}
+            
+            <div class="profile-meta">
+                {{#if portfolioUser.location}}
+                <div class="meta-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{portfolioUser.location}}
+                </div>
+                {{/if}}
+                <div class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    Member since {{portfolioUser.createdAt}}
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+                {{#if portfolioUser.github}}
+                <a href="{{portfolioUser.github}}" target="_blank" class="social-btn" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                {{else}}
+                <div class="social-btn inactive" title="GitHub not available">
+                    <i class="fab fa-github"></i>
+                </div>
+                {{/if}}
+
+                {{#if portfolioUser.linkedin}}
+                <a href="{{portfolioUser.linkedin}}" target="_blank" class="social-btn" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                {{else}}
+                <div class="social-btn inactive" title="LinkedIn not available">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                {{/if}}
+
+                {{#if portfolioUser.website}}
+                <a href="{{portfolioUser.website}}" target="_blank" class="social-btn" title="Website">
+                    <i class="fas fa-globe"></i>
+                </a>
+                {{else}}
+                <div class="social-btn inactive" title="Website not available">
+                    <i class="fas fa-globe"></i>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        {{#if portfolioUser.skills}}
+        <div class="skills-section">
+            <h2 class="section-title"><i class="fas fa-star"></i> Skills & Expertise</h2>
+            <div class="skills-list">
+                {{#each (split portfolioUser.skills ",")}}
+                <span class="skill-tag">{{trim this}}</span>
+                {{/each}}
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Projects Section -->
+        <div class="projects-section">
+            <h2 class="section-title"><i class="fas fa-projects"></i> Featured Projects</h2>
+            
+            {{#if projects}}
+            <div class="projects-grid">
+                {{#each projects}}
+                <div class="project-card">
+                    <h3 class="project-title">{{this.title}}</h3>
+                    <p class="project-desc">{{this.description}}</p>
+                    <span class="project-tech">{{this.technologies}}</span>
+                    <div class="project-links">
+                        {{#if this.link}}
+                        <a href="{{this.link}}" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Live Demo
+                        </a>
+                        {{else}}
+                        <span class="project-link disabled">
+                            <i class="fas fa-external-link-alt"></i> No Link
+                        </span>
+                        {{/if}}
+                        {{#if this.github}}
+                        <a href="{{this.github}}" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        {{else}}
+                        <span class="project-link disabled">
+                            <i class="fab fa-github"></i> No Code
+                        </span>
+                        {{/if}}
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="empty-state">
+                <i class="fas fa-inbox"></i>
+                <p>No projects published yet.</p>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 {{portfolioUser.name}}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

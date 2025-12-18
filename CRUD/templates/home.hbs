@@ -17,8 +17,21 @@
                 <li><a href="/projects" class="nav-link">Projects</a></li>
                 <li><a href="/contact" class="nav-link">Contact</a></li>
                 <li><a href="/add-project" class="nav-link">Add Project</a></li>
+                {{#if user}}
+                <li class="user-nav">
+                    <img src="{{user.avatar}}" alt="Profile" class="user-avatar-small">
+                    <span>{{user.name}}</span>
+                    <div class="user-dropdown">
+                        <a href="/dashboard" class="dropdown-link">Dashboard</a>
+                        <a href="/profile/{{user._id}}" class="dropdown-link">Edit Profile</a>
+                        <a href="/portfolio/{{user._id}}" class="dropdown-link">View Portfolio</a>
+                        <a href="/logout" class="dropdown-link logout">Logout</a>
+                    </div>
+                </li>
+                {{else}}
                 <li><a href="/login" class="nav-link auth-link">Login</a></li>
                 <li><a href="/signup" class="nav-link auth-link">Sign Up</a></li>
+                {{/if}}
             </ul>
         </div>
     </nav>
@@ -98,6 +111,76 @@
 
         .nav-link:hover {
             color: #0066ff;
+        }
+
+        .auth-link {
+            background: #0066ff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .auth-link:hover {
+            background: #0052cc;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            color: #b0b9c1;
+            cursor: pointer;
+        }
+
+        .user-avatar-small {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid #00d4ff;
+            object-fit: cover;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(15, 20, 25, 0.95);
+            border: 1px solid #00d4ff;
+            border-radius: 5px;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+        }
+
+        .user-nav:hover .user-dropdown {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-link {
+            padding: 1rem;
+            color: #b0b9c1;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #2d3748;
+        }
+
+        .dropdown-link:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-link:hover {
+            background: #1a2332;
+            color: #0066ff;
+        }
+
+        .dropdown-link.logout {
+            color: #ff4444;
+        }
+
+        .dropdown-link.logout:hover {
+            background: rgba(255, 68, 68, 0.1);
         }
 
         .hero {

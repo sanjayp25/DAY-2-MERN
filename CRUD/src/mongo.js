@@ -29,6 +29,11 @@ const portfolioSchema=new mongoose.Schema({
         type:String,
         default:""
     },
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User',
+        default:null
+    },
     createdAt:{
         type:Date,
         default:Date.now
@@ -62,6 +67,30 @@ const userSchema=new mongoose.Schema({
     avatar:{
         type:String,
         default:"https://via.placeholder.com/150"
+    },
+    title:{
+        type:String,
+        default:"Full Stack Developer"
+    },
+    location:{
+        type:String,
+        default:""
+    },
+    skills:{
+        type:String,
+        default:""
+    },
+    website:{
+        type:String,
+        default:""
+    },
+    github:{
+        type:String,
+        default:""
+    },
+    linkedin:{
+        type:String,
+        default:""
     },
     createdAt:{
         type:Date,

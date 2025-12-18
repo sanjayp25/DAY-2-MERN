@@ -40,10 +40,35 @@
                         <input type="text" name="name" value="{{user.name}}" placeholder="Enter your full name">
                     </div>
                     <div class="form-group">
+                        <label>Professional Title</label>
+                        <input type="text" name="title" value="{{user.title}}" placeholder="e.g., Full Stack Developer">
+                    </div>
+                    <div class="form-group">
                         <label>Bio</label>
                         <textarea name="bio" rows="4" placeholder="Tell us about yourself">{{user.bio}}</textarea>
                     </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" name="location" value="{{user.location}}" placeholder="e.g., San Francisco, CA">
+                    </div>
+                    <div class="form-group">
+                        <label>Skills (comma separated)</label>
+                        <input type="text" name="skills" value="{{user.skills}}" placeholder="e.g., JavaScript, React, Node.js, MongoDB">
+                    </div>
+                    <div class="form-group">
+                        <label>Website</label>
+                        <input type="url" name="website" value="{{user.website}}" placeholder="https://yourwebsite.com">
+                    </div>
+                    <div class="form-group">
+                        <label>GitHub Profile</label>
+                        <input type="url" name="github" value="{{user.github}}" placeholder="https://github.com/yourusername">
+                    </div>
+                    <div class="form-group">
+                        <label>LinkedIn Profile</label>
+                        <input type="url" name="linkedin" value="{{user.linkedin}}" placeholder="https://linkedin.com/in/yourusername">
+                    </div>
                     <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="/dashboard" class="btn btn-secondary">Go to Dashboard</a>
                 </form>
             </div>
         </div>
@@ -213,12 +238,31 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            margin-right: 1rem;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #0066ff, #ff0066);
             color: white;
-            align-self: flex-start;
+        }
+
+        .btn-secondary {
+            background: #2d3748;
+            color: #00d4ff;
+            border: 1px solid #00d4ff;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:hover {
+            background: #3d4758;
+            transform: translateY(-2px);
         }
 
         .btn-primary:hover {
