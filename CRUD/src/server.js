@@ -36,9 +36,9 @@ const checkUserLogin = async (req,res,next) => {
 
 app.use(checkUserLogin)
 
-// Home page - Portfolio
+// Home page - One Page Portfolio
 app.get("/",(req,res)=>{
-    res.render("home",{user:req.user})
+    res.render("index",{user:req.user})
 })
 
 // About page
