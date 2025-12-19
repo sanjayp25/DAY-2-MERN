@@ -3,81 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Project - John Doe</title>
-    <link rel="stylesheet" href="/css/home.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">JD</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/about" class="nav-link">About</a></li>
-                <li><a href="/projects" class="nav-link">Projects</a></li>
-                <li><a href="/contact" class="nav-link">Contact</a></li>
-                <li><a href="/add-project" class="nav-link">Add Project</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="content-section">
-        <div class="container">
-            <h1>Add New Project</h1>
-            {{#if message}}<div class="success-message">{{message}}</div>{{/if}}
-            {{#if error}}<div class="error-message">{{error}}</div>{{/if}}
-            <form method="POST" action="/add-project" class="form">
-                <div class="form-group">
-                    <label>Project Title</label>
-                    <input type="text" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea name="description" rows="5" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Technologies Used</label>
-                    <input type="text" name="technologies" placeholder="e.g., React, Node.js, MongoDB" required>
-                </div>
-                <div class="form-group">
-                    <label>Project Link</label>
-                    <input type="url" name="link" placeholder="https://...">
-                </div>
-                <div class="form-group">
-                    <label>GitHub Link</label>
-                    <input type="url" name="github" placeholder="https://github.com/...">
-                </div>
-                <button type="submit" class="btn btn-primary">Add Project</button>
-            </form>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p>&copy; 2024 John Doe. All rights reserved.</p>
-    </footer>
-
+    <title>Add Project - Sanjay's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 20, 25, 0.95);
+            border-bottom: 2px solid #667eea;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #b0b9c1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Content Section */
         .content-section {
             min-height: calc(100vh - 200px);
             padding: 80px 20px;
         }
 
         .container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        .content-section h1 {
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: slideIn 0.6s ease;
+        }
+
+        .page-header h1 {
             font-size: 2.5rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, #0066ff, #ff0066);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .page-header p {
+            color: #b0b9c1;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 20px;
+            padding: 3rem;
+            animation: slideIn 0.7s ease;
         }
 
         .form {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #667eea;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: rgba(15, 20, 25, 0.5);
+            border: 2px solid #667eea;
+            color: #fff;
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            background: rgba(15, 20, 25, 0.8);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #666;
+        }
+
+        .textarea-hint {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 0.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 2px solid #667eea;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .message-box {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message {
+            background: rgba(76, 175, 80, 0.2);
+            border: 2px solid #4caf50;
+            color: #4caf50;
+        }
+
+        .error-message {
+            background: rgba(255, 107, 107, 0.2);
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 20, 25, 0.95);
+            border-top: 2px solid #667eea;
+            padding: 2rem;
+            text-align: center;
+            color: #b0b9c1;
+            margin-top: 3rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-container {
+                padding: 2rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo"><i class="fas fa-rocket"></i> SP</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/projects" class="nav-link">Projects</a></li>
+                <li><a href="/dashboard" class="nav-link">Dashboard</a></li>
+                <li><a href="/add-project" class="nav-link active">Add Project</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-star"></i> Create New Project</h1>
+                <p>Showcase your amazing work to the world</p>
+            </div>
+
+            <div class="form-container">
+                {{#if message}}<div class="message-box success-message"><i class="fas fa-check-circle"></i> {{message}}</div>{{/if}}
+                {{#if error}}<div class="message-box error-message"><i class="fas fa-exclamation-circle"></i> {{error}}</div>{{/if}}
+                
+                <form method="POST" action="/add-project" class="form">
+                    <div class="form-group">
+                        <label for="title"><i class="fas fa-heading"></i> Project Title</label>
+                        <input type="text" id="title" name="title" placeholder="Enter project title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea id="description" name="description" rows="5" placeholder="Describe your project, features, and accomplishments..." required></textarea>
+                        <p class="textarea-hint">Write a compelling description that highlights what makes your project unique</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="technologies"><i class="fas fa-code"></i> Technologies Used</label>
+                        <input type="text" id="technologies" name="technologies" placeholder="e.g., React, Node.js, MongoDB, Tailwind CSS" required>
+                        <p class="textarea-hint">Comma-separated list of technologies used in this project</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link"><i class="fas fa-link"></i> Live Demo Link</label>
+                        <input type="url" id="link" name="link" placeholder="https://your-project-link.com">
+                        <p class="textarea-hint">Optional: Link to the live project (if deployed)</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="github"><i class="fab fa-github"></i> GitHub Repository</label>
+                        <input type="url" id="github" name="github" placeholder="https://github.com/yourusername/project-name">
+                        <p class="textarea-hint">Optional: Link to the GitHub repository</p>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                        <a href="/dashboard" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Sanjay's Portfolio. All rights reserved.</p>
+    </footer>
+</body>
+</html>
         }
 
         .form-group {

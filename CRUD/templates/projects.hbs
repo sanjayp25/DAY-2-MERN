@@ -3,57 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - SANJAY</title>
-    <link rel="stylesheet" href="/css/home.css">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="logo">SP</a>
-            <ul class="nav-menu">
-                <li><a href="/" class="nav-link">Home</a></li>
-                <li><a href="/about" class="nav-link">About</a></li>
-                <li><a href="/projects" class="nav-link">Projects</a></li>
-                <li><a href="/contact" class="nav-link">Contact</a></li>
-                <li><a href="/add-project" class="nav-link">Add Project</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <section class="content-section">
-        <div class="container">
-            <h1>My Projects</h1>
-            <div class="projects-grid">
-                {{#if projects}}
-                    {{#each projects}}
-                    <div class="project-card">
-                        <h3>{{this.title}}</h3>
-                        <p>{{this.description}}</p>
-                        <div class="technologies">
-                            <strong>Technologies:</strong> {{this.technologies}}
-                        </div>
-                        <div class="project-links">
-                            {{#if this.link}}<a href="{{this.link}}" target="_blank" class="link-btn">View Project</a>{{/if}}
-                            {{#if this.github}}<a href="{{this.github}}" target="_blank" class="link-btn">GitHub</a>{{/if}}
-                            <a href="/project/{{this._id}}" class="link-btn">Details</a>
-                            <form action="/delete-project/{{this._id}}" method="POST" style="display:inline;">
-                                <button type="submit" class="link-btn delete-btn" onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                    {{/each}}
-                {{else}}
-                    <p style="color: #b0b9c1; text-align: center; grid-column: 1/-1;">No projects yet. <a href="/add-project" style="color: #0066ff;">Add your first project!</a></p>
-                {{/if}}
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <p>&copy; 2024 John Doe. All rights reserved.</p>
-    </footer>
-
+    <title>Projects - Sanjay's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1419 0%, #1a1a2e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(15, 20, 25, 0.95);
+            border-bottom: 2px solid #667eea;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            animation: slideIn 0.5s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #b0b9c1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #667eea;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Content Section */
         .content-section {
             min-height: calc(100vh - 200px);
             padding: 80px 20px;
@@ -64,37 +110,71 @@
             margin: 0 auto;
         }
 
-        .content-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, #0066ff, #ff0066);
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #b0b9c1;
         }
 
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
+            margin-bottom: 3rem;
         }
 
         .project-card {
-            background: #232a3e;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid #2d3748;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
             transition: all 0.3s ease;
+            animation: slideIn 0.5s ease backwards;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
         }
 
         .project-card:hover {
-            border-color: #0066ff;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
+            transform: translateY(-10px);
+            border-color: #764ba2;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
         }
 
         .project-card h3 {
-            color: #00d4ff;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            font-weight: 700;
         }
 
         .project-card p {
@@ -104,40 +184,209 @@
         }
 
         .technologies {
-            color: #b0b9c1;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 3px solid #667eea;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .technologies strong {
+            color: #667eea;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .technologies-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-badge {
+            background: rgba(118, 75, 162, 0.2);
+            color: #667eea;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid #667eea;
         }
 
         .project-links {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
         }
 
         .link-btn {
-            background: #0066ff;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 6px 12px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s ease;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: inline-block;
+            font-size: 0.9rem;
         }
 
         .link-btn:hover {
-            background: #00d4ff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
         }
 
         .delete-btn {
-            background: #ff0066;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            grid-column: span 2;
         }
 
         .delete-btn:hover {
-            background: #cc0052;
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            animation: slideIn 0.5s ease;
+        }
+
+        .empty-state p {
+            color: #b0b9c1;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .empty-state a {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .empty-state a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(15, 20, 25, 0.95);
+            border-top: 2px solid #667eea;
+            padding: 2rem;
+            text-align: center;
+            color: #b0b9c1;
+            margin-top: 3rem;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-links {
+                grid-template-columns: 1fr;
+            }
+
+            .delete-btn {
+                grid-column: span 1;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
         }
     </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo"><i class="fas fa-rocket"></i> SP</a>
+            <ul class="nav-menu">
+                <li><a href="/" class="nav-link">Home</a></li>
+                <li><a href="/about" class="nav-link">About</a></li>
+                <li><a href="/projects" class="nav-link active">Projects</a></li>
+                <li><a href="/contact" class="nav-link">Contact</a></li>
+                <li><a href="/add-project" class="nav-link">Add Project</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="page-header">
+                <h1><i class="fas fa-briefcase"></i> My Projects</h1>
+                <p>Explore my latest work and projects</p>
+            </div>
+            
+            {{#if projects}}
+            <div class="projects-grid">
+                {{#each projects}}
+                <div class="project-card" style="animation-delay: {{@index}}00ms;">
+                    <h3>{{this.title}}</h3>
+                    <p>{{this.description}}</p>
+                    
+                    {{#if this.technologies}}
+                    <div class="technologies">
+                        <strong><i class="fas fa-code"></i> Tech Stack</strong>
+                        <div class="technologies-list">
+                            {{#each (split this.technologies ',')}}
+                            <span class="tech-badge">{{trim this}}</span>
+                            {{/each}}
+                        </div>
+                    </div>
+                    {{/if}}
+                    
+                    <div class="project-links">
+                        {{#if this.link}}<a href="{{this.link}}" target="_blank" class="link-btn"><i class="fas fa-eye"></i> View</a>{{/if}}
+                        {{#if this.github}}<a href="{{this.github}}" target="_blank" class="link-btn"><i class="fab fa-github"></i> Code</a>{{/if}}
+                        <a href="/project/{{this._id}}" class="link-btn"><i class="fas fa-info-circle"></i> Details</a>
+                        <form action="/delete-project/{{this._id}}" method="POST" style="display:contents;">
+                            <button type="submit" class="link-btn delete-btn" onclick="return confirm('Are you sure?')"><i class="fas fa-trash"></i> Delete</button>
+                        </form>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            {{else}}
+            <div class="empty-state">
+                <p><i class="fas fa-inbox" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem; display: block;"></i>No projects yet. Time to create something amazing!</p>
+                <a href="/add-project"><i class="fas fa-plus"></i> Add Your First Project</a>
+            </div>
+            {{/if}}
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 Sanjay's Portfolio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Helper functions for Handlebars
+        function split(str, delimiter) {
+            return str ? str.split(delimiter) : [];
+        }
+        
+        function trim(str) {
+            return str ? str.trim() : '';
+        }
+    </script>
 </body>
 </html>
