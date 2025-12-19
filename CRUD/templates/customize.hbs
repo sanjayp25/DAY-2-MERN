@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customize Your Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 25px 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 28px;
+        }
+
+        .header a {
+            background: #667eea;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .header a:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        /* Avatar Section */
+        .avatar-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: fit-content;
+        }
+
+        .avatar-display {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #667eea;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: 80px;
+            color: white;
+        }
+
+        .avatar-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .upload-btn {
+            width: 100%;
+            padding: 12px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .avatar-info {
+            color: #666;
+            font-size: 12px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        /* Form Section */
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .social-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .social-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .social-input-group i {
+            color: #667eea;
+            width: 25px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .social-input-group input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .social-input-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Skills */
+        .skills-container {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            min-height: 50px;
+        }
+
+        .skill-input-wrapper {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .skill-input-wrapper input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .skill-input-wrapper button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .skill-input-wrapper button:hover {
+            background: #764ba2;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-tag .remove {
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        /* Color Picker */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .color-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .color-box:hover {
+            transform: scale(1.1);
+        }
+
+        .color-box.active {
+            border-color: #333;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Preview */
+        .preview-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 25px;
+        }
+
+        .preview-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #667eea;
+            object-fit: cover;
+        }
+
+        .preview-info h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .preview-info .title {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .preview-info .location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-cancel {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-cancel:hover {
+            background: #d0d0d0;
+        }
+
+        .message {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .color-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .preview-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-paint-brush"></i> Customize Your Profile</h1>
+            <a href="/dashboard"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
+        </div>
+
+        <div id="message"></div>
+
+        <div class="main-content">
+            <!-- Avatar Section -->
+            <div class="avatar-card">
+                <div class="avatar-display" id="avatarDisplay">
+                    <i class="fas fa-user"></i>
+                </div>
+                <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                    <i class="fas fa-camera"></i> Upload Photo
+                </button>
+                <input type="file" id="photoInput" accept="image/*">
+                <div class="avatar-info">
+                    <strong>JPG, PNG, GIF</strong><br>
+                    Max 5MB<br>
+                    Recommended: Square image
+                </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="form-card">
+                <form id="profileForm">
+                    <!-- Basic Info -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-user-circle"></i> Basic Information
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Full Name *</label>
+                                <input type="text" id="fullName" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" id="jobTitle" placeholder="e.g. Full Stack Developer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio -->
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea id="bio" placeholder="Tell us about yourself..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-map-marker-alt"></i> Contact Information
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" id="location" placeholder="City, Country">
+                            </div>
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input type="url" id="website" placeholder="https://yourwebsite.com">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-link"></i> Social Links
+                        </div>
+                        <div class="social-inputs">
+                            <div class="social-input-group">
+                                <i class="fab fa-github"></i>
+                                <input type="text" id="github" placeholder="GitHub username">
+                            </div>
+                            <div class="social-input-group">
+                                <i class="fab fa-linkedin"></i>
+                                <input type="text" id="linkedin" placeholder="LinkedIn URL">
+                            </div>
+                            <div class="social-input-group">
+                                <i class="fab fa-twitter"></i>
+                                <input type="text" id="twitter" placeholder="Twitter handle">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Skills -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-star"></i> Skills
+                        </div>
+                        <div class="skills-container">
+                            <div class="skill-input-wrapper">
+                                <input type="text" id="skillInput" placeholder="e.g. JavaScript, React, Node.js">
+                                <button type="button" onclick="addSkill()">Add</button>
+                            </div>
+                            <div class="skill-tags" id="skillTags"></div>
+                        </div>
+                    </div>
+
+                    <!-- Theme Color -->
+                    <div class="form-section">
+                        <div class="section-title">
+                            <i class="fas fa-palette"></i> Theme Color
+                        </div>
+                        <div class="color-grid">
+                            <div class="color-box active" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="selectColor(this)"></div>
+                            <div class="color-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);" onclick="selectColor(this)"></div>
+                            <div class="color-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);" onclick="selectColor(this)"></div>
+                            <div class="color-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);" onclick="selectColor(this)"></div>
+                            <div class="color-box" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);" onclick="selectColor(this)"></div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-save">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                        <button type="button" class="btn btn-cancel" onclick="window.location.href='/dashboard'">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="preview-card">
+            <h3 style="margin-bottom: 20px; color: #333;"><i class="fas fa-eye"></i> Live Preview</h3>
+            <div class="preview-header">
+                <img id="previewAvatar" src="https://via.placeholder.com/150?text=Avatar" alt="Preview" class="preview-avatar">
+                <div class="preview-info">
+                    <h2 id="previewName">Your Name</h2>
+                    <div class="title" id="previewTitle">Job Title</div>
+                    <div class="location"><i class="fas fa-map-marker-alt"></i> <span id="previewLocation">City, Country</span></div>
+                    <div id="previewSkills"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const photoInput = document.getElementById('photoInput');
+        const skillInput = document.getElementById('skillInput');
+        const skillTags = document.getElementById('skillTags');
+        const profileForm = document.getElementById('profileForm');
+
+        // Photo upload
+        photoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const img = event.target.result;
+                    document.getElementById('avatarDisplay').innerHTML = `<img src="${img}" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    document.getElementById('previewAvatar').src = img;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Real-time preview
+        document.getElementById('fullName').addEventListener('input', function() {
+            document.getElementById('previewName').textContent = this.value || 'Your Name';
+        });
+
+        document.getElementById('jobTitle').addEventListener('input', function() {
+            document.getElementById('previewTitle').textContent = this.value || 'Job Title';
+        });
+
+        document.getElementById('location').addEventListener('input', function() {
+            document.getElementById('previewLocation').textContent = this.value || 'City, Country';
+        });
+
+        // Skill management
+        function addSkill() {
+            const skill = skillInput.value.trim();
+            if (skill) {
+                const tag = document.createElement('span');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `${skill} <span class="remove" onclick="this.parentElement.remove(); updatePreview();">×</span>`;
+                skillTags.appendChild(tag);
+                skillInput.value = '';
+                updatePreview();
+            }
+        }
+
+        skillInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addSkill();
+            }
+        });
+
+        function updatePreview() {
+            const skills = Array.from(skillTags.querySelectorAll('.skill-tag'))
+                .map(tag => tag.textContent.replace('×', '').trim());
+            document.getElementById('previewSkills').innerHTML = skills
+                .map(skill => `<span class="badge">${skill}</span>`)
+                .join('');
+        }
+
+        function selectColor(element) {
+            document.querySelectorAll('.color-box').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = `message ${type}`;
+            setTimeout(() => msg.className = 'message', 3000);
+        }
+
+        profileForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append('name', document.getElementById('fullName').value);
+            formData.append('title', document.getElementById('jobTitle').value);
+            formData.append('bio', document.getElementById('bio').value);
+            formData.append('location', document.getElementById('location').value);
+            formData.append('website', document.getElementById('website').value);
+            formData.append('github', document.getElementById('github').value);
+            formData.append('linkedin', document.getElementById('linkedin').value);
+            
+            const skills = Array.from(skillTags.querySelectorAll('.skill-tag'))
+                .map(tag => tag.textContent.replace('×', '').trim())
+                .join(',');
+            formData.append('skills', skills);
+
+            if (photoInput.files[0]) {
+                formData.append('avatar', photoInput.files[0]);
+            }
+
+            try {
+                const response = await fetch(window.location.pathname, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    showMessage('✓ Profile updated successfully!', 'success');
+                    setTimeout(() => window.location.href = '/dashboard', 1500);
+                } else {
+                    showMessage('Error updating profile', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        });
+    </script>
+</body>
+</html>

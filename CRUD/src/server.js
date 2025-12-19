@@ -244,6 +244,32 @@ app.get("/profile/:id",async(req,res)=>{
     }
 })
 
+// Customize profile page
+app.get("/customize-profile/:id",async(req,res)=>{
+    try{
+        const user=await User.findById(req.params.id)
+        if(!user){
+            return res.status(404).send("User not found")
+        }
+        res.render("profile-customize",{
+            userId:req.params.id,
+            name:user.name||"",
+            title:user.title||"",
+            bio:user.bio||"",
+            location:user.location||"",
+            website:user.website||"",
+            github:user.github||"",
+            linkedin:user.linkedin||"",
+            skills:user.skills||"",
+            avatar:user.avatar||""
+        })
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.send("Error loading profile customization")
+    }
+})
+
 // Update profile
 app.post("/profile/:id",upload.single("avatar"),async(req,res)=>{
     try{
