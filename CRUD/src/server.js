@@ -244,7 +244,32 @@ app.get("/profile/:id",async(req,res)=>{
     }
 })
 
-// Customize profile page - New attractive UI
+// Customize portfolio - for logged in users
+app.get("/customize",async(req,res)=>{
+    try{
+        if(!req.user){
+            return res.redirect("/login")
+        }
+        res.render("customize-portfolio",{
+            userId:req.user._id,
+            name:req.user.name||req.user.username||"",
+            title:req.user.title||"",
+            bio:req.user.bio||"",
+            location:req.user.location||"",
+            website:req.user.website||"",
+            github:req.user.github||"",
+            linkedin:req.user.linkedin||"",
+            skills:req.user.skills||"",
+            avatar:req.user.avatar||""
+        })
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.send("Error loading portfolio customization")
+    }
+})
+
+// Customize portfolio page - New attractive UI
 app.get("/customize-portfolio/:id",async(req,res)=>{
     try{
         const user=await User.findById(req.params.id)
