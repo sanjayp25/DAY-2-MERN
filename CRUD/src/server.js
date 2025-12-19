@@ -244,7 +244,33 @@ app.get("/profile/:id",async(req,res)=>{
     }
 })
 
-// Customize profile page
+// Customize profile page - New attractive UI
+app.get("/customize-portfolio/:id",async(req,res)=>{
+    try{
+        const user=await User.findById(req.params.id)
+        if(!user){
+            return res.status(404).send("User not found")
+        }
+        res.render("customize-portfolio",{
+            userId:req.params.id,
+            name:user.name||"",
+            title:user.title||"",
+            bio:user.bio||"",
+            location:user.location||"",
+            website:user.website||"",
+            github:user.github||"",
+            linkedin:user.linkedin||"",
+            skills:user.skills||"",
+            avatar:user.avatar||""
+        })
+    }
+    catch(err){
+        console.log("Error:",err)
+        res.send("Error loading portfolio customization")
+    }
+})
+
+// Customize profile page - Old version
 app.get("/customize-profile/:id",async(req,res)=>{
     try{
         const user=await User.findById(req.params.id)
