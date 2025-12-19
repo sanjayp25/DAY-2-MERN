@@ -11,6 +11,11 @@
     <div class="login-page">
         <div class="login-wrapper">
             <h2>Login</h2>
+            {{#if message}}
+                <div style="background: #f8d7da; color: #721c24; padding: 12px; border-radius: 5px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+                    {{message}}
+                </div>
+            {{/if}}
             <form action="/login" method="POST">
                 <div class="form-group">
                     <label for="email">Email</label>
